@@ -3,24 +3,29 @@
 }
 @model BuscaDeProdutosViewModel;
 <!-- bloco de pesquisa -->
-<div class="container">
-    <div class="row">
-        <div class="col-md-4">
-            <h2>Buscar produtos</h2>
-            <div id="custom-search-input">
-                <div class="input-group col-md-12">
-                    <input type="text" name="pesquisa" class="form-control input-lg" placeholder="categoria ou produto" id="Pesquisa" value="" />
-                    <span class="input-group-btn">
-                        <button class="btn btn-info btn-lg" type="submit">
-                            <i class="glyphicon glyphicon-search"></i>
-                        </button>
-                    </span>
+<form asp-action="BuscaDeProdutos" method="post">
+    <div class="container">
+        <div class="row">
+            <div class="col-md-4">
+                <h2>Buscar produtos</h2>
+                <div id="custom-search-input">
+                    <div class="input-group col-md-12">
+                        <input type="text" name="Pesquisa" class="form-control input-lg" placeholder="categoria ou produto" id="Pesquisa" value="@Model.Pesquisa" asp-for="@Model.Pesquisa" />
+                        <span class="input-group-btn">
+                            <button class="btn btn-info btn-lg" type="submit">
+                                <i class="glyphicon glyphicon-search"></i>
+                            </button>
+                        </span>
+                        <br />
+                    </div>
+                    <span class="text-danger">@Model.Pesquisa_Erro</span>
                 </div>
             </div>
         </div>
     </div>
-</div>
+</form>
 <!-- bloco de pesquisa -->
+
 <!-- agrupamento categoria -->
 @foreach (var _categoria in Model.Categorias)
 {

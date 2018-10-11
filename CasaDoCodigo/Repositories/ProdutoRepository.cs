@@ -1,4 +1,5 @@
 ﻿using CasaDoCodigo.Models;
+using Microsoft.AspNetCore.Mvc.ModelBinding;
 using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
@@ -11,7 +12,23 @@ namespace CasaDoCodigo.Repositories
         {
         }
 
-        public IList<Produto> GetProdutos() => dbSet.ToList();
+        //public IList<Produto> GetProdutos() => dbSet.ToList();
+        public IList<Produto> GetProdutos(ModelStateDictionary _modelState,string pesquisa = "")
+        {
+            // se recebeu parametro de pesquisa e a pesquisa retornou a lista e a lista contem algo
+            if (!string.IsNullOrEmpty(pesquisa))
+            {
+                if (dbSet.Where(p => p.Nome.ToUpper().Contains(pesquisa.ToUpper()) || p.Categoria.Nome.ToUpper().Contains(pesquisa.ToUpper())).ToList() is IList<Produto> retorno && retorno.Count > 0)
+                {
+                    // retorna a lista
+                    return retorno;
+                }
+                _modelState.AddModelError("Pesquisa_Produto","Não foram encontrados produtos com o termo pesquisado.");
+            }
+
+            // retorna todos
+            return dbSet.ToList();
+        }
 
         public async Task SaveProdutos(List<Livro> livros)
         {
@@ -32,7 +49,7 @@ namespace CasaDoCodigo.Repositories
 
                 if (!dbSet.Where(p => p.Codigo == livro.Codigo).Any())
                 {
-                    dbSet.Add(new Produto(livro.Codigo, livro.Nome, livro.Preco,categoria.Id));
+                    dbSet.Add(new Produto(livro.Codigo, livro.Nome, livro.Preco, categoria.Id));
                 }
             }
             await contexto.SaveChangesAsync();
