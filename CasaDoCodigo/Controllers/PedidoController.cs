@@ -2,9 +2,7 @@
 using CasaDoCodigo.Models.ViewModels;
 using CasaDoCodigo.Repositories;
 using Microsoft.AspNetCore.Mvc;
-using System;
 using System.Collections.Generic;
-using System.Linq;
 using System.Threading.Tasks;
 
 namespace CasaDoCodigo.Controllers
@@ -14,19 +12,30 @@ namespace CasaDoCodigo.Controllers
         private readonly IProdutoRepository produtoRepository;
         private readonly IPedidoRepository pedidoRepository;
         private readonly IItemPedidoRepository itemPedidoRepository;
+        private readonly ICategoriaRepository categoriaRepository;
 
         public PedidoController(IProdutoRepository produtoRepository,
             IPedidoRepository pedidoRepository,
-            IItemPedidoRepository itemPedidoRepository)
+            IItemPedidoRepository itemPedidoRepository,
+            ICategoriaRepository categoriaRepository)
         {
             this.produtoRepository = produtoRepository;
             this.pedidoRepository = pedidoRepository;
             this.itemPedidoRepository = itemPedidoRepository;
+            this.categoriaRepository = categoriaRepository;
         }
 
         public IActionResult Carrossel()
         {
             return View(produtoRepository.GetProdutos());
+        }
+
+        public IActionResult BuscaDeProdutos()
+        {
+            var produtos = produtoRepository.GetProdutos();
+            var categorias = categoriaRepository.GetCategorias();
+            var viewmodel = new BuscaDeProdutosViewModel(produtos, categorias);
+            return View(viewmodel);
         }
 
         public async Task<IActionResult> Carrinho(string codigo)
