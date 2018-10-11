@@ -1,13 +1,10 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Threading.Tasks;
-using CasaDoCodigo.Repositories;
+﻿using CasaDoCodigo.Repositories;
 using Microsoft.AspNetCore.Builder;
 using Microsoft.AspNetCore.Hosting;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
+using System;
 
 namespace CasaDoCodigo
 {
@@ -34,6 +31,7 @@ namespace CasaDoCodigo
             );
 
             services.AddTransient<IDataService, DataService>();
+            services.AddTransient<ICategoriaRepository, CategoriaRepository>();
             services.AddTransient<IProdutoRepository, ProdutoRepository>();
             services.AddTransient<IPedidoRepository, PedidoRepository>();
             services.AddTransient<ICadastroRepository, CadastroRepository>();
@@ -67,7 +65,7 @@ namespace CasaDoCodigo
                     template: "{controller=Pedido}/{action=Carrossel}/{codigo?}");
             });
 
-            //serviceProvider.GetService<IDataService>().InicializaDB().Wait();
+            serviceProvider.GetService<IDataService>().InicializaDB().Wait();
         }
     }
 

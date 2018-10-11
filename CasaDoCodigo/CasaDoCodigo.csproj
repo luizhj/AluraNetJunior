@@ -6,6 +6,15 @@
   </PropertyGroup>
 
   <ItemGroup>
+    <Compile Remove="Migrations\20180315183749_Inicial.cs" />
+    <Compile Remove="Migrations\20180315184326_Modelo.cs" />
+    <Compile Remove="Migrations\20181010194422_Categoria.cs" />
+    <Compile Remove="Migrations\20181011112122_Produto.Categoria.cs" />
+    <Compile Remove="Migrations\20181011112732_categoria.cs" />
+    <Compile Remove="Migrations\20181011113435_categoria.cs" />
+  </ItemGroup>
+
+  <ItemGroup>
     <None Remove="middlewares.png" />
     <None Remove="pipeline.png" />
   </ItemGroup>

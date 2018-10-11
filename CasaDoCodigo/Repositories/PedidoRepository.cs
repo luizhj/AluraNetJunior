@@ -3,7 +3,6 @@ using CasaDoCodigo.Models.ViewModels;
 using Microsoft.AspNetCore.Http;
 using Microsoft.EntityFrameworkCore;
 using System;
-using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
 
@@ -64,12 +63,11 @@ namespace CasaDoCodigo.Repositories
         public async Task<Pedido> GetPedido()
         {
             var pedidoId = GetPedidoId();
-            var pedido = dbSet
-                .Include(p => p.Itens)
-                    .ThenInclude(i => i.Produto)
-                .Include(p => p.Cadastro)
-                .Where(p => p.Id == pedidoId)
-                .SingleOrDefault();
+            var pedido = dbSet.Include(p => p.Itens)
+                            .ThenInclude(i => i.Produto)
+                            .Include(p => p.Cadastro)
+                            .Where(p => p.Id == pedidoId)
+                            .SingleOrDefault();
 
             if (pedido == null)
             {
@@ -82,15 +80,9 @@ namespace CasaDoCodigo.Repositories
             return pedido;
         }
 
-        private int? GetPedidoId()
-        {
-            return contextAccessor.HttpContext.Session.GetInt32("pedidoId");
-        }
+        private int? GetPedidoId() => contextAccessor.HttpContext.Session.GetInt32("pedidoId");
 
-        private void SetPedidoId(int pedidoId)
-        {
-            contextAccessor.HttpContext.Session.SetInt32("pedidoId", pedidoId);
-        }
+        private void SetPedidoId(int pedidoId) => contextAccessor.HttpContext.Session.SetInt32("pedidoId", pedidoId);
 
         public async Task<UpdateQuantidadeResponse> UpdateQuantidade(ItemPedido itemPedido)
         {

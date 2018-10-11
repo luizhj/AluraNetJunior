@@ -1,8 +1,5 @@
 ﻿using CasaDoCodigo.Models;
-using System;
-using System.Collections.Generic;
 using System.Linq;
-using System.Threading.Tasks;
 
 namespace CasaDoCodigo.Repositories
 {
@@ -18,17 +15,8 @@ namespace CasaDoCodigo.Repositories
         {
         }
 
-        public ItemPedido GetItemPedido(int itemPedidoId)
-        {
-            return
-            dbSet
-                .Where(ip => ip.Id == itemPedidoId)
-                .SingleOrDefault();
-        }
+        public ItemPedido GetItemPedido(int itemPedidoId) => dbSet.Where(ip => ip.Id == itemPedidoId).SingleOrDefault();
 
-        public void RemoveItemPedido(int itemPedidoId)
-        {
-            dbSet.Remove(GetItemPedido(itemPedidoId));
-        }
+        public void RemoveItemPedido(int itemPedidoId) => dbSet.Remove(GetItemPedido(itemPedidoId));
     }
 }

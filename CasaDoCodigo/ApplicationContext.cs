@@ -1,10 +1,5 @@
 ﻿using CasaDoCodigo.Models;
-using JetBrains.Annotations;
 using Microsoft.EntityFrameworkCore;
-using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Threading.Tasks;
 
 namespace CasaDoCodigo
 {
@@ -18,7 +13,9 @@ namespace CasaDoCodigo
         {
             base.OnModelCreating(modelBuilder);
 
+            modelBuilder.Entity<Categoria>().HasKey(t => t.Id);
             modelBuilder.Entity<Produto>().HasKey(t => t.Id);
+            modelBuilder.Entity<Produto>().HasOne(t => t.Categoria);
 
             modelBuilder.Entity<Pedido>().HasKey(t => t.Id);
             modelBuilder.Entity<Pedido>().HasMany(t => t.Itens).WithOne(t => t.Pedido);
