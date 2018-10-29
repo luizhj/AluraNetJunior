@@ -24,6 +24,8 @@ namespace CasaDoCodigo
             services.AddDistributedMemoryCache();
             services.AddSession();
 
+            services.AddHttpContextAccessor();
+
             string connectionString = Configuration.GetConnectionString("Default");
 
             services.AddDbContext<ApplicationContext>(options =>
